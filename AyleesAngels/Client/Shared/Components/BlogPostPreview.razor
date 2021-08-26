@@ -1,0 +1,24 @@
+﻿@using AyleesAngels.Shared.Models
+
+<div class="post-preview">
+    <NavLink href="@($"viewpost/{blogPost.Id}")">
+        <h3 class="post-title">
+            @blogPost.Title
+        </h3>
+        <h5 class="post-subtitle">
+            @blogPost.PostSummary
+        </h5>
+    </NavLink>
+    <p class="post-meta">
+        Posted by
+        <NavLink href="/">@blogPost.Author</NavLink>
+        on @blogPost.Posted.ToString("MM/dd/yyyy h:m tt")
+    </p>
+</div>
+
+@code {
+
+    [Parameter]
+    public BlogPost blogPost { get; set; }
+
+}

@@ -1,0 +1,19 @@
+﻿
+@page "/editpost/{postId}"
+
+<h3>Edit a post</h3>
+
+<AAHeader Heading="@ExistingBlogPost.Title" Author=@ExistingBlogPost.Author PostedDate=@ExistingBlogPost.Posted></AAHeader>
+
+<div class="editor">
+    <input @bind=@ExistingBlogPost.Title placeholder="Title" class="form-control m-1" />
+    <textarea @bind=@ExistingBlogPost.Post placeholder="Write your post" rows="10" class="form-control m-1"></textarea>
+    <button class="btn btn-primary m-1" @onclick="@UpdatePost">Post</button>
+    <br />
+</div>
+
+
+
+@code {
+
+}

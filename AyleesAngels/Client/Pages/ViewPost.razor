@@ -1,0 +1,43 @@
+﻿ @page "/viewpost/{postId}"
+
+
+
+<AAHeader Heading="@BlogPost.Title" Author=@BlogPost.Author PostedDate=@BlogPost.Posted></AAHeader>
+
+<article>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                @if (BlogPost.Title is not null)
+                {
+                    @BlogPost.Post
+                }
+
+                else
+                {
+                    <p>Post was not found. </p>
+                }
+
+            <AuthorizeView>
+                <NavLink class="nav-link" href="@($"/editpost/{BlogPost.Id}")">
+                    <span class="oi oi-home" aria-hidden="true"></span> Edit
+                </NavLink>
+            </AuthorizeView>
+                
+             
+            
+                
+                
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+            
+            </div>
+            
+        </div>
+    </div>
+</article>
+
+@code {
+
+}

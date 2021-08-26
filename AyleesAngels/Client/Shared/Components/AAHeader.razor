@@ -1,0 +1,29 @@
+﻿
+
+
+<header class="masthead" >
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto text-center mb-1">
+                <div class="@((Author != null && PostedDate.ToString() != null) ? "post-heading" : "site-heading" )">
+                    <h1>@Heading</h1>
+                    @if (SubHeading != null)
+                    {
+                        <span class="subheading">@SubHeading</span>
+                    }
+                    @if (Author != null && PostedDate.ToString() != null)
+                    {
+                        <span class="meta">Posted by <a href="#">@Author</a> on @PostedDate.ToShortDateString()</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+@code {
+
+}

@@ -1,0 +1,10 @@
+﻿.instagram-label {
+    font-family: Tangerine;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+img {
+    max-height: 42px;
+    width: auto;
+}

@@ -1,0 +1,64 @@
+﻿@page "/partners"
+
+@using AyleesAngels.Shared.Models;
+@using AyleesAngels.Shared.Utils;
+
+@inject IHttpClientFactory ClientFactory
+
+
+
+<div class="container">
+    <AAHeader Heading="Our Valued Partnerships" />
+    <div class="row ">
+        <div class="col-lg-8 col-md-10 mx-auto text-left">
+            @foreach (var partner in partners)
+            {
+                string altTextString = partner.Name + " logo";
+                <div class="row">
+                    <div class="col">
+                        
+                        <a href=@partner.LinkUrl><ThumbnailImage ImageUrl=@partner.ImageUrl AltText=altTextString /></a>
+                        <h4 class="d-inline">@partner.Name</h4>
+                    </div>
+                </div> 
+                
+                            }
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+
+    public List<Partner> partners { get; set; } = new List<Partner>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await LoadPartners();
+
+    }
+
+    private async Task LoadPartners()
+    {
+        try
+        {
+
+            var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest");
+            var response = await client.GetFromJsonAsync<ServiceResponse<List<Partner>>>(Urls.Partners);
+
+            partners = response.Data;
+
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine("Error fetching partners" + ex.Message);
+        }
+    }
+
+
+}
