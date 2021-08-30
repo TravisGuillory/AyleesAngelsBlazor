@@ -10,10 +10,11 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
+
 namespace AyleesAngels.Client.Pages.PostEditor
 {
     [Authorize]
-    public partial class PostEditor
+    public partial class PostEditor : ComponentBase
     {
         [Inject]
         private IHttpClientFactory ClientFactory { get; set; }
@@ -26,7 +27,7 @@ namespace AyleesAngels.Client.Pages.PostEditor
         [Parameter]
         public string PostId { get; set; }
 
-        public BlogPost ExistingBlogPost { get; set; } = new BlogPost();
+        public AyleesAngels.Shared.Models.BlogPost ExistingBlogPost { get; set; } = new AyleesAngels.Shared.Models.BlogPost();
         
 
 
@@ -51,8 +52,8 @@ namespace AyleesAngels.Client.Pages.PostEditor
             {
                 Console.WriteLine("Editing POst");
                 var updatedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI")
-                        .PutAsJsonAsync<BlogPost>(Urls.UpdateBlogPost.Replace("{id}", PostId), ExistingBlogPost);
-                var response = updatedPost.Content.ReadFromJsonAsync<ServiceResponse<BlogPost>>();
+                        .PutAsJsonAsync<AyleesAngels.Shared.Models.BlogPost>(Urls.UpdateBlogPost.Replace("{id}", PostId), ExistingBlogPost);
+                var response = updatedPost.Content.ReadFromJsonAsync<ServiceResponse<AyleesAngels.Shared.Models.BlogPost>>();
                 
                 NavigationManager.NavigateTo($"viewpost/{PostId}");
             }
@@ -72,7 +73,7 @@ namespace AyleesAngels.Client.Pages.PostEditor
                 var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest");
 
 
-                var response = await client.GetFromJsonAsync<ServiceResponse<BlogPost>>(Urls.BlogPost.Replace("{id}", PostId));
+                var response = await client.GetFromJsonAsync<ServiceResponse<AyleesAngels.Shared.Models.BlogPost>>(Urls.BlogPost.Replace("{id}", PostId));
                 ExistingBlogPost = response.Data;
                 
                 

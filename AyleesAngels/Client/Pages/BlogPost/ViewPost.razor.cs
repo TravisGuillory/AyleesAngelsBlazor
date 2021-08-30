@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AyleesAngels.Client.Pages
 {
-    public partial class ViewPost
+    public partial class ViewPost : ComponentBase
     {
         [Inject]
         private IHttpClientFactory ClientFactory { get; set; }
@@ -20,7 +20,7 @@ namespace AyleesAngels.Client.Pages
         [Parameter]
         public string PostId { get; set; }
 
-        public BlogPost BlogPost { get; set; } = new BlogPost();
+        public AyleesAngels.Shared.Models.BlogPost BlogPost { get; set; } = new AyleesAngels.Shared.Models.BlogPost();
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,7 +36,7 @@ namespace AyleesAngels.Client.Pages
                 var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest");
 
                 
-                var response = await client.GetFromJsonAsync<ServiceResponse<BlogPost>>(Urls.BlogPost.Replace("{id}", PostId));
+                var response = await client.GetFromJsonAsync<ServiceResponse<AyleesAngels.Shared.Models.BlogPost >>(Urls.BlogPost.Replace("{id}", PostId));
                 BlogPost = response.Data;
 
                 

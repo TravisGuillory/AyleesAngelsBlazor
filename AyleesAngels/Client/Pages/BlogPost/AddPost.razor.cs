@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 namespace AyleesAngels.Client.Pages
 {
     [Authorize]
-    public partial class AddPost
+    public partial class AddPost : ComponentBase
     {
         [Inject]
         private IHttpClientFactory ClientFactory { get; set; }
@@ -36,7 +36,7 @@ namespace AyleesAngels.Client.Pages
         {
             var userName = AuthenticationState.Result.User.Identity.Name;
             
-            var newPost = new BlogPost()
+            var newPost = new AyleesAngels.Shared.Models.BlogPost()
             {
                 Title = Title,
                 Author = userName,
@@ -44,8 +44,8 @@ namespace AyleesAngels.Client.Pages
                 Posted = DateTime.Now
             };
 
-            var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<BlogPost>(Urls.AddBlogPost, newPost);
-            var response = await savedPost.Content.ReadFromJsonAsync<ServiceResponse<BlogPost>>();
+            var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<AyleesAngels.Shared.Models.BlogPost>(Urls.AddBlogPost, newPost);
+            var response = await savedPost.Content.ReadFromJsonAsync<ServiceResponse<AyleesAngels.Shared.Models.BlogPost>>();
             int savedPostId = response.Data.Id;
             NavigationManager.NavigateTo($"viewpost/{savedPostId}");
 

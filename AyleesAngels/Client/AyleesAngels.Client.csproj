@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\AyleesAngels.Shared.csproj" />
+	
   </ItemGroup>
 
 </Project>

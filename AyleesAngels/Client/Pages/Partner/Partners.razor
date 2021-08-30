@@ -2,6 +2,8 @@
 
 @using AyleesAngels.Shared.Models;
 @using AyleesAngels.Shared.Utils;
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 @inject IHttpClientFactory ClientFactory
 
@@ -9,6 +11,13 @@
 
 <div class="container">
     <AAHeader Heading="Our Valued Partnerships" />
+    <AuthorizeView>
+        <Authorized>
+            <NavLink class="nav-link text-center" href="addpartner">
+                <button class=" btn btn-outline-success d-inline">Add Partner</button>
+            </NavLink>
+        </Authorized>
+    </AuthorizeView>
     <div class="row ">
         <div class="col-lg-8 col-md-10 mx-auto text-left">
             @foreach (var partner in partners)
@@ -16,13 +25,23 @@
                 string altTextString = partner.Name + " logo";
                 <div class="row">
                     <div class="col">
-                        
+
                         <a href=@partner.LinkUrl><ThumbnailImage ImageUrl=@partner.ImageUrl AltText=altTextString /></a>
-                        <h4 class="d-inline">@partner.Name</h4>
+                        <h5 class="d-inline">@partner.Name</h5>
+                        <AuthorizeView>
+                            <Authorized>
+                                <NavLink class="nav-link d-inline" href="@($"/editpost/{partner.Id}")">
+                                    Edit
+                                </NavLink>
+                                <NavLink class="nav-link d-inline" href="@($"/editpost/{partner.Id}")">
+                                    Delete
+                                </NavLink>
+                            </Authorized>
+                        </AuthorizeView>
                     </div>
-                </div> 
-                
-                            }
+                </div>
+
+            }
 
         </div>
     </div>
@@ -59,6 +78,11 @@
             Console.WriteLine("Error fetching partners" + ex.Message);
         }
     }
+
+    private async Task DeletePartner()
+        {
+            ClientFactory.CreateClient("AyleesAngels.ServerAPI");
+        }
 
 
 }
