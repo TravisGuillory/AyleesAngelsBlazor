@@ -15,7 +15,9 @@ namespace AyleesAngels.Client.Pages
     {
         [Inject]
         private IHttpClientFactory ClientFactory { get; set; }
-        
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
 
         [Parameter]
         public string PostId { get; set; }
@@ -34,8 +36,6 @@ namespace AyleesAngels.Client.Pages
             {
 
                 var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest");
-
-                
                 var response = await client.GetFromJsonAsync<ServiceResponse<BlogPost>>(Urls.BlogPost.Replace("{id}", PostId));
                 BlogPost = response.Data;
 
@@ -47,5 +47,14 @@ namespace AyleesAngels.Client.Pages
                 Console.WriteLine(ex);
             }
         }
+
+        private async Task DeletePost()
+        {
+            await ClientFactory.CreateClient("AyleesAngels.ServerAPI").DeleteAsync(Urls.DeleteBlogPost.Replace("{id}",PostId));
+            
+            NavigationManager.NavigateTo("/");
+        }
+
+        
     }
 }

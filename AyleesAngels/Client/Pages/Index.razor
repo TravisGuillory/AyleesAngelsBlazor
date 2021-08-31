@@ -3,6 +3,7 @@
 
 @*@inject HttpClient Http*@
 @inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
 
 
 @page "/"
@@ -19,6 +20,11 @@
             @foreach (var post in blogPosts)
             {
                 <BlogPostPreview BlogPost=@post></BlogPostPreview>
+                
+                <NavLink class="nav-link d-inline" href="@($"/editpost/{post.Id}")">
+                   <button class="btn btn-small btn-warning">Edit</button>
+                </NavLink>
+                <button class="btn btn-danger btn-small d-inline" @onclick="() => DeletePost(post.Id)">Delete</button>
                 <hr />
                 
             }
@@ -34,7 +40,7 @@
 
 
     protected List<BlogPost> blogPosts { get; set; } = new List<BlogPost>();
-   
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,13 +57,21 @@
             //blogPosts = blogPostsResponse.OrderByDescending(p => p.Posted).ToList();
             blogPosts = blogPostsResponse.Data.OrderByDescending(p => p.Posted).ToList();
 
-            
+
 
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
         }
+
+    }
+
+    private async Task DeletePost(int postId)
+    {
+        var response = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").DeleteAsync(Urls.DeleteBlogPost.Replace("{id}", postId.ToString()));
+
+        await LoadBlogPosts();
 
     }
 

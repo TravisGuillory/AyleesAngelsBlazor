@@ -12,6 +12,6 @@ namespace AyleesAngels.Server.Services
         Task<ServiceResponse<BlogPost>> GetBlogPost(int id);
         Task<ServiceResponse<BlogPost>> AddBlogPost(BlogPost newBlogPost);
         Task<ServiceResponse<BlogPost>> UpdateBlogPost(BlogPost updatedBlogPost);
-        Task<ServiceResponse<int>> DeleteBlogPost(int id);
+        Task<ServiceResponse<List<BlogPost>>> DeleteBlogPost(int id);
     }
 }

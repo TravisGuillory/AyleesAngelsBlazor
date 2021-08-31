@@ -2,39 +2,51 @@
 
 
 
-<AAHeader Heading="@BlogPost.Title" Author=@BlogPost.Author PostedDate=@BlogPost.Posted></AAHeader>
+<AAHeader Heading="@BlogPost.Title" Author="@BlogPost.Author" ></AAHeader>
 
 <article>
     <div class="container text-center">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="col-lg-8 col-md-10 mx-auto text-center">
                 @if (BlogPost.Title is not null)
                 {
-                    @BlogPost.Post
-                }
+                    @BlogPost.Post }
 
                 else
                 {
                     <p>Post was not found. </p>
                 }
-
-            <AuthorizeView>
-                <NavLink class="nav-link" href="@($"/editpost/{BlogPost.Id}")">
-                    <span class="oi oi-home" aria-hidden="true"></span> Edit
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto text-center">
+                    <AuthorizeView>
+                        <NavLink class="nav-link d-inline" href="@($"/editpost/{BlogPost.Id}")">
+                            <button class="btn btn-warning">Edit</button>
+                        </NavLink>
+                        <NavLink>
+                            <button class="btn btn-danger d-inline" @onclick="DeletePost">Delete</button>
+                        </NavLink>
+                    </AuthorizeView>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
                 </NavLink>
-            </AuthorizeView>
+            </div>
+            
+            
                 
              
             
                 
                 
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
             
-            </div>
             
-        </div>
+            
+            
+        
     </div>
 </article>
 

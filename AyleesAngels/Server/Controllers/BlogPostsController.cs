@@ -60,9 +60,9 @@ namespace AyleesAngels.Server.Controllers
         [HttpDelete(Urls.DeleteBlogPost)]
         public async Task<IActionResult> DeleteBlogPost(int id)
         {
-            await _blogPostService.DeleteBlogPost(id);
-
-            return Ok();
+            var response = await _blogPostService.DeleteBlogPost(id);
+             
+            return Ok(response);
         }
     }
 }

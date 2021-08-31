@@ -49,7 +49,7 @@ namespace AyleesAngels.Client.Pages.PostEditor
         {
             try
             {
-                Console.WriteLine("Editing POst");
+                
                 var updatedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI")
                         .PutAsJsonAsync<BlogPost>(Urls.UpdateBlogPost.Replace("{id}", PostId), ExistingBlogPost);
                 var response = updatedPost.Content.ReadFromJsonAsync<ServiceResponse<BlogPost>>();

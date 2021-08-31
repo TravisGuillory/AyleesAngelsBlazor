@@ -1,9 +1,14 @@
 ﻿
 @page "/editpost/{postId}"
 
-<h3>Edit a post</h3>
 
-<AAHeader Heading="@ExistingBlogPost.Title" Author=@ExistingBlogPost.Author PostedDate=@ExistingBlogPost.Posted></AAHeader>
+
+
+
+<AAHeader Heading="@ExistingBlogPost.Title" Author=@ExistingBlogPost.Author PostedDate=@ExistingBlogPost.Posted></AAHeader> }
+
+
+
 
 <div class="editor">
     <input @bind=@ExistingBlogPost.Title placeholder="Title" class="form-control m-1" />
@@ -14,6 +19,4 @@
 
 
 
-@code {
-
-}
+@code { }

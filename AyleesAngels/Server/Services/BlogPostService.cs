@@ -22,7 +22,7 @@ namespace AyleesAngels.Server.Services
         public async Task<ServiceResponse<List<BlogPost>>> GetBlogPosts()
         {
             ServiceResponse<List<BlogPost>> serviceResponse = new ServiceResponse<List<BlogPost>>();
-            //List<BlogPost> blogPosts = await _context.BlogPosts.ToListAsync();
+            
             serviceResponse.Data = await _context.BlogPosts.ToListAsync(); ;
             return serviceResponse;
         }
@@ -68,16 +68,26 @@ namespace AyleesAngels.Server.Services
         
 
         
-        public async Task<ServiceResponse<int>> DeleteBlogPost(int id)
+        public async Task<ServiceResponse<List<BlogPost>>> DeleteBlogPost(int id)
         {
-            ServiceResponse<int> serviceResponse = new ServiceResponse<int>();
-            var blogPost = await _context.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
-            int initialRecords = _context.BlogPosts.Count();
+            ServiceResponse<List<BlogPost>> serviceResponse = new ServiceResponse<List<BlogPost>>();
 
-            _context.BlogPosts.Remove(blogPost);
-            await _context.SaveChangesAsync();
-            int currentRecords = _context.BlogPosts.Count();
-            serviceResponse.Data = initialRecords - currentRecords;
+            try
+            {
+                var postToDelete = await _context.BlogPosts.FirstOrDefaultAsync(p => p.Id == id);
+                _context.BlogPosts.Remove(postToDelete);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Data = _context.BlogPosts.ToList();
+            }
+            catch (Exception ex)
+            {
+                
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+            
+            
             return serviceResponse;
 
         }
