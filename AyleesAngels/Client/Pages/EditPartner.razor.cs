@@ -68,11 +68,12 @@ namespace AyleesAngels.Client.Pages
             try
             {
 
-                var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest");
+                var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI");
 
 
                 var response = await client.GetFromJsonAsync<ServiceResponse<Partner>>(Urls.Partner.Replace("{id}", PartnerId));
                 ExistingPartner = response.Data;
+                Console.WriteLine(ExistingPartner);
 
 
             }

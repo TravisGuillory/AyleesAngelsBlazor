@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="editor">
-                    <input @bind=@Name placeholder="Title" class="form-control m-1"  />
-                    <input @bind=@ImageUrl placeholder="Image Link"  class="form-control m-1" />
-                    <input @bind=@LinkUrl placeholder="Company Link" class="form-control m-1" />
+                    <input @bind=@PartnerName placeholder="Title" class="form-control m-1"  />
+                    <input @bind=@PartnerImageUrl placeholder="Image Link"  class="form-control m-1" />
+                    <input @bind=@PartnerLinkUrl placeholder="Company Link" class="form-control m-1" />
                     <button class="btn btn-primary m-1" @onclick="@SavePartner">Add Partner</button>
                     <br />
                 </div>
@@ -30,9 +30,9 @@
 
 @code {
 
-    protected string Name { get; set; }
-    protected string ImageUrl { get; set; }
-    protected string LinkUrl { get; set; }
+    protected string PartnerName { get; set; }
+    protected string PartnerImageUrl { get; set; }
+    protected string PartnerLinkUrl { get; set; }
 
     public async Task SavePartner()
     {
@@ -42,9 +42,9 @@
 
         var newPartner = new Partner()
         {
-            Name= Name,
-            ImageUrl = ImageUrl,
-            LinkUrl = LinkUrl
+            Name= PartnerName,
+            ImageUrl = PartnerImageUrl,
+            LinkUrl = PartnerLinkUrl
         };
 
         var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<Partner>(Urls.AddPartner, newPartner);
