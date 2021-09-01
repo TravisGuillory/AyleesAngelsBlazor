@@ -18,10 +18,10 @@ namespace AyleesAngels.Server.Controllers
     {
 
         private readonly IPartnerService _partnerService;
-        private readonly PartnerDbContext _context;
+        
 
 
-        public PartnersController(IPartnerService partnerService, PartnerDbContext context)
+        public PartnersController(IPartnerService partnerService)
         {
             _partnerService = partnerService;
 
