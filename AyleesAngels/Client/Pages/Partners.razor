@@ -8,21 +8,41 @@
 
 
 <div class="container">
-    <AAHeader Heading="Our Valued Partnerships" />
+    <AAHeader Heading="Thank You to Our Amazing Partners" />
+    <div class="text-center">
+        <AuthorizeView>
+            <Authorized>
+                <NavLink class="nav-link d-inline" href="/addpartner">
+                    <button class="btn btn-small btn-success">Add Partner</button>
+                </NavLink>
+            </Authorized>
+        </AuthorizeView>
+        
+        
+    </div>
+    
     <div class="row ">
         <div class="col-lg-8 col-md-10 mx-auto text-left">
             @foreach (var partner in partners)
             {
                 string altTextString = partner.Name + " logo";
-                <div class="row">
-                    <div class="col">
-                        
-                        <a href=@partner.LinkUrl><ThumbnailImage ImageUrl=@partner.ImageUrl AltText=altTextString /></a>
-                        <h4 class="d-inline">@partner.Name</h4>
-                    </div>
-                </div> 
-                
-                            }
+        <div class="row">
+            <div class="col mb-2">
+
+                <a href=@partner.LinkUrl>
+                    <ThumbnailImage ImageUrl=@partner.ImageUrl AltText=altTextString />
+                    <h4 class="d-inline">@partner.Name</h4>
+                </a>
+                <AuthorizeView>
+                    <Authorized>
+                        <NavLink class="nav-link d-inline" href="@($"/editpartner/{partner.Id}")">
+                            <button class="btn btn-small btn-warning">Edit</button>
+                        </NavLink>
+                        <button class="btn btn-danger btn-small d-inline" @onclick="() => DeletePartner(partner.Id)">Delete</button>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </div>}
 
         </div>
     </div>
@@ -60,5 +80,12 @@
         }
     }
 
+    private async Task DeletePartner(int postId)
+    {
+        var response = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").DeleteAsync(Urls.DeletePartner.Replace("{id}", postId.ToString()));
+
+        await LoadPartners();
+
+    }
 
 }

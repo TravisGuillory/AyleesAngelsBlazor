@@ -13,30 +13,29 @@ using AyleesAngels.Shared.Utils;
 
 namespace AyleesAngels.Server.Controllers
 {
-    [Route(Urls.Partners)]
-    [ApiController]
+    
     public class PartnersController : Controller
     {
-        
+
         private readonly IPartnerService _partnerService;
-        private readonly PartnerDbContext _context; 
+        private readonly PartnerDbContext _context;
 
 
         public PartnersController(IPartnerService partnerService, PartnerDbContext context)
         {
             _partnerService = partnerService;
-           
+
         }
 
         // GET: api/Partners
-        [HttpGet]
+        [HttpGet(Urls.Partners)]
         [AllowAnonymous]
         public async Task<IActionResult> GetPartners()
         {
 
             var response = await _partnerService.GetPartners();
             return Ok(response);
-            
+
         }
 
 

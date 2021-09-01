@@ -1,0 +1,20 @@
+﻿@page "/editpartner/{partnerId}"
+@namespace AyleesAngels.Client.Pages
+
+
+
+
+
+
+<AAHeader Heading=""></AAHeader>
+
+
+
+
+<div class="editor">
+    <input @bind=@ExistingPartner.Name placeholder="Name" class="form-control m-1" />
+    <textarea @bind=@ExistingPartner.ImageUrl placeholder="Image Url" class="form-control m-1"></textarea>
+    <textarea @bind=@ExistingPartner.LinkUrl placeholder="Link Url" class="form-control m-1"></textarea>
+    <button class="btn btn-primary m-1" @onclick="@UpdatePartner">Update Partner</button>
+    <br />
+</div>

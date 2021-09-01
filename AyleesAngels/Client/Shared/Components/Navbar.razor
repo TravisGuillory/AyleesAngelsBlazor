@@ -8,21 +8,29 @@
         </button>
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="about">
-                        Aylees's Story
+                <li class="nav-item px-1">
+                    <NavLink class="nav-link" href="aylees-story">
+                        Aylee's Story
                     </NavLink>
                 </li>
+                <li class="nav-item px-1">
+                    <NavLink class="nav-link" href="partners">
+                        Partners
+                    </NavLink>
+                </li>
+                
                 <AuthorizeView>
                     <Authorized>
-                        <li class="nav-item px-3">
+                        <li class="nav-item px-1">
                             <NavLink class="nav-link" href="addpost">
                                 Add a post
                             </NavLink>
                         </li>
+
                     </Authorized>
                 </AuthorizeView>
-                    
+
+
             </ul>
         </div>
     </div>

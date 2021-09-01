@@ -1,0 +1,58 @@
+﻿@page "/addpartner"
+@using AyleesAngels.Shared.Models;
+@using AyleesAngels.Shared.Utils;
+
+@inject NavigationManager NavigationManager
+@inject IHttpClientFactory ClientFactory
+
+
+
+
+<AAHeader Heading="Add a Partner"></AAHeader>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container mb-2">
+        <h3>Add a Partner</h3>
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="editor">
+                    <input @bind=@Name placeholder="Title" class="form-control m-1"  />
+                    <input @bind=@ImageUrl placeholder="Image Link"  class="form-control m-1" />
+                    <input @bind=@LinkUrl placeholder="Company Link" class="form-control m-1" />
+                    <button class="btn btn-primary m-1" @onclick="@SavePartner">Add Partner</button>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+@code {
+
+    protected string Name { get; set; }
+    protected string ImageUrl { get; set; }
+    protected string LinkUrl { get; set; }
+
+    public async Task SavePartner()
+    {
+
+
+
+
+        var newPartner = new Partner()
+        {
+            Name= Name,
+            ImageUrl = ImageUrl,
+            LinkUrl = LinkUrl
+        };
+
+        var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<Partner>(Urls.AddPartner, newPartner);
+        var response = await savedPost.Content.ReadFromJsonAsync<ServiceResponse<Partner>>();
+
+        NavigationManager.NavigateTo("partners");
+
+
+
+    }
+}

@@ -21,12 +21,14 @@
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto text-center">
                     <AuthorizeView>
-                        <NavLink class="nav-link d-inline" href="@($"/editpost/{BlogPost.Id}")">
-                            <button class="btn btn-warning">Edit</button>
-                        </NavLink>
-                        <NavLink>
-                            <button class="btn btn-danger d-inline" @onclick="DeletePost">Delete</button>
-                        </NavLink>
+                        <Authorized>
+                            <NavLink class="nav-link d-inline" href="@($"/editpost/{BlogPost.Id}")">
+                                <button class="btn btn-warning">Edit</button>
+                            </NavLink>
+                            <NavLink>
+                                <button class="btn btn-danger d-inline" @onclick="DeletePost">Delete</button>
+                            </NavLink>
+                        </Authorized>
                     </AuthorizeView>
                 </div>
             </div>
