@@ -17,7 +17,7 @@ namespace AyleesAngels.Shared.Utils
         
         public const string Partners = "api/partners";
         public const string Partner = "api/partners/{id}";
-        public const string AddPartner = "api/partners";
+        public const string AddPartner = "api/Partners";
         public const string UpdatePartner = "api/partner/{id}";
         public const string EditPartner = "api/partner/{id}";
         public const string DeletePartner = "api/partners/{id}";

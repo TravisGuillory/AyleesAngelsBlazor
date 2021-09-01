@@ -13,7 +13,7 @@ using AyleesAngels.Shared.Utils;
 
 namespace AyleesAngels.Server.Controllers
 {
-    
+    [Route(Urls.Partners)]
     public class PartnersController : Controller
     {
 
