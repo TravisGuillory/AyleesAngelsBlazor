@@ -31,14 +31,17 @@
 
                 <a href=@partner.LinkUrl>
                     <ThumbnailImage ImageUrl=@partner.ImageUrl AltText=altTextString />
-                    <h4 class="d-inline">@partner.Name</h4>
                 </a>
+                    <h4 class="d-inline" href="@partner.LinkUrl">@partner.Name</h4>
+                
                 <AuthorizeView>
                     <Authorized>
                         <NavLink class="nav-link d-inline" href="@($"/editpartner/{partner.Id}")">
-                            <button class="btn btn-small btn-warning">Edit</button>
+                            
+                            <a href="@($"/editpartner/{partner.Id}")" class="text-warning">Edit</a>
                         </NavLink>
-                        <button class="btn btn-danger btn-small d-inline" @onclick="() => DeletePartner(partner.Id)">Delete</button>
+                        
+                        <a  @onclick="() => DeletePartner(partner.Id)" class="text-danger">Delete</a>
                     </Authorized>
                 </AuthorizeView>
             </div>

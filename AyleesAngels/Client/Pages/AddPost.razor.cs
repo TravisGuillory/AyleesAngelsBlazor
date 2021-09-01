@@ -36,6 +36,7 @@ namespace AyleesAngels.Client.Pages
         {
             var userName = AuthenticationState.Result.User.Identity.Name;
             
+
             var newPost = new BlogPost()
             {
                 Title = Title,
