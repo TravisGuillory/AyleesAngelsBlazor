@@ -40,7 +40,7 @@ namespace AyleesAngels.Server.Controllers
 
 
         // GET: api/Partners/5
-        [HttpGet("{id}")]
+        [HttpGet(Urls.Partner)]
         [AllowAnonymous]
         public async Task<IActionResult> GetPartner(int id)
         {
@@ -56,19 +56,21 @@ namespace AyleesAngels.Server.Controllers
 
         // POST: api/Partners
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<IActionResult> PostPartner(Partner partner)
+        [Authorize]
+        [HttpPost(Urls.AddPartner)]
+        public async Task<IActionResult> PostPartner([FromBody] Partner newPartner)
         {
-            await _partnerService.AddPartner(partner);
+            await _partnerService.AddPartner(newPartner);
 
 
-            return CreatedAtAction("GetPartner", new { id = partner.Id }, partner);
+            return CreatedAtAction("GetPartner", new { id = newPartner.Id }, newPartner);
         }
 
         // PUT: api/Partners/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPartner(int id, Partner updatedPartner)
+        [Authorize]
+        [HttpPut(Urls.UpdatePartner)] 
+        public async Task<IActionResult> PutPartner(int id,[FromBody] Partner updatedPartner)
         {
             await _partnerService.UpdatePartner(updatedPartner);
 
@@ -76,7 +78,8 @@ namespace AyleesAngels.Server.Controllers
         }
 
         // DELETE: api/Partners/5
-        [HttpDelete("{id}")]
+        [Authorize]
+        [HttpDelete(Urls.DeletePartner)]
         public async Task<IActionResult> DeletePartner(int id)
         {
             var partner = await _partnerService.DeletePartner(id);

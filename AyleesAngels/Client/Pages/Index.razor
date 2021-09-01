@@ -21,11 +21,15 @@
             {
                 <BlogPostPreview BlogPost=@post></BlogPostPreview>
                 
-                <NavLink class="nav-link d-inline" href="@($"/editpost/{post.Id}")">
-                   <button class="btn btn-small btn-warning">Edit</button>
-                </NavLink>
-                <button class="btn btn-danger btn-small d-inline" @onclick="() => DeletePost(post.Id)">Delete</button>
-                <hr />
+                <AuthorizeView>
+                    <Authorized>
+                        <NavLink class="nav-link d-inline" href="@($"/editpost/{post.Id}")">
+                            <button class="btn btn-small btn-warning">Edit</button>
+                        </NavLink>
+                        <button class="btn btn-danger btn-small d-inline" @onclick="() => DeletePost(post.Id)">Delete</button>
+                    </Authorized>
+                </AuthorizeView>
+                
                 
             }
             
