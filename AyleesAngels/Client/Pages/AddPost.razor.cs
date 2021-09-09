@@ -21,14 +21,16 @@ namespace AyleesAngels.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationState { get; set; }
+        private Task<AuthenticationState> AuthenticationState { get; set; }  
         
+        
+
 
         protected string Post { get; set; }
         protected string Title { get; set; }
 
 
-
+         
         
 
 

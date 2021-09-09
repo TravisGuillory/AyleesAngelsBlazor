@@ -1,9 +1,12 @@
 ﻿@using AyleesAngels.Shared.Models;
 @using AyleesAngels.Shared.Utils;
+@using System.Security.Claims;
+@using System.Security;
 
 
 @inject IHttpClientFactory ClientFactory
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 
 @page "/"
@@ -21,7 +24,7 @@
             {
                 <BlogPostPreview BlogPost=@post></BlogPostPreview>
                 
-                <AuthorizeView>
+                <AuthorizeView >
                     <Authorized>
                         <NavLink class="nav-link d-inline" href="@($"/editpost/{post.Id}")">
                             <a class="text-warning">Edit</a>
@@ -29,14 +32,20 @@
                         <a @onclick="() => DeletePost(post.Id)" class="text-danger">Delete</a>
                     </Authorized>
                 </AuthorizeView>
-                
+                <AuthorizeView Roles="developer">
+                    <Authorized>Farthead</Authorized> 
+                </AuthorizeView>
                 
             }
             
         </div>
     </div>
 </div>
-
+<h5>@_authMessage</h5>
+@foreach(var claim in _claims)
+            {
+                <p>@claim</p>
+            }
 
 
 @code {
@@ -45,11 +54,18 @@
 
     protected List<BlogPost> blogPosts { get; set; } = new List<BlogPost>();
 
+    private string _authMessage;
+    
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+    
+
 
     protected override async Task OnInitializedAsync()
     {
 
         await LoadBlogPosts();
+        await GetClaimsPrincipalData();
+
     }
 
     private async Task LoadBlogPosts()
@@ -73,10 +89,41 @@
 
     private async Task DeletePost(int postId)
     {
+        
+        
         var response = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").DeleteAsync(Urls.DeleteBlogPost.Replace("{id}", postId.ToString()));
 
         await LoadBlogPosts();
 
     }
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        
+        
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+            _claims = user.Claims;
+
+
+            Console.WriteLine("****Claims****" +_claims.Count());
+            foreach(var claim in _claims)
+            {
+                Console.WriteLine(claim);
+            }
+        }
+        else
+        {
+            _authMessage = "User is not authenticated";
+        }
+
+        
+    }
+
 
 }

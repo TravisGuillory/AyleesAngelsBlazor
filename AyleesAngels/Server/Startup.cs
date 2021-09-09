@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System.Linq;
 
 namespace AyleesAngels.Server
@@ -40,9 +42,13 @@ namespace AyleesAngels.Server
             services.AddDbContext<PartnerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<OfficerDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -51,11 +57,25 @@ namespace AyleesAngels.Server
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("RequireAdmin", c => c.RequireRole("Admin"));
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<IPartnerService, PartnerService>();
-            //services.AddTransient(typeof(BlogPostService));
+
+            //services.AddSwaggerGen(c => 
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aylees's Angels API", Version = "v1" });
+
+
+
+            //});
+            services.AddSwaggerGen();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +86,7 @@ namespace AyleesAngels.Server
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
+                
             }
             else
             {
@@ -83,13 +104,16 @@ namespace AyleesAngels.Server
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alyee's Angels API VI");
+                
+            });
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
-                
+                               
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 

@@ -22,5 +22,10 @@ namespace AyleesAngels.Shared.Utils
         public const string EditPartner = "api/partner/{id}";
         public const string DeletePartner = "api/partners/{id}";
 
+        public const string Officers = "api/officers";
+        public const string Officer = "api/officers/{id}";
+        public const string AddOfficer = "api/officers";
+        public const string UpdateOfficer = "api/officers/{id}";
+        public const string DeleteOfficer = "api/officers/{id}";
     }
 }
