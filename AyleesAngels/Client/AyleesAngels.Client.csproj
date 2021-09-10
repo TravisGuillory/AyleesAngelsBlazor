@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Shared\AyleesAngels.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\PostPages\" />
-  </ItemGroup>
-
 </Project>

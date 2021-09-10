@@ -1,4 +1,5 @@
 ﻿using AyleesAngels.Server.Data;
+using AyleesAngels.Server.Services;
 using AyleesAngels.Shared.Models;
 using AyleesAngels.Shared.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -17,10 +18,12 @@ namespace AyleesAngels.Server.Controllers
     public class OfficersController : ControllerBase
     {
         private readonly OfficerDbContext _context;
+        private readonly IOfficerService _service;
 
-        public OfficersController(OfficerDbContext context)
+        public OfficersController(IOfficerService service, OfficerDbContext context)
         {
             _context = context;
+            _service = service;
         }
 
         [HttpGet(Urls.Officers)]
@@ -28,7 +31,15 @@ namespace AyleesAngels.Server.Controllers
         public async Task<IActionResult> Officers()
         {
 
-            return Ok(await _context.Officers.ToListAsync());
+            try
+            {
+                return Ok(await _service.GetOfficers());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            
         }
 
         [HttpGet(Urls.Officer)]
@@ -37,7 +48,8 @@ namespace AyleesAngels.Server.Controllers
         {
             try
             {
-                return Ok(await _context.Officers.FirstOrDefaultAsync(o => o.Id == id));
+                return Ok(await _service.GetOfficer(id));
+                
             }
             catch
             {
@@ -51,8 +63,8 @@ namespace AyleesAngels.Server.Controllers
         {
             try
             {
-                await _context.Officers.AddAsync(newOfficer);
-                await _context.SaveChangesAsync();
+                await _service.AddOfficer(newOfficer);
+                
                 return CreatedAtAction("Officer", new { id = newOfficer.Id }, newOfficer);
             }
             catch (Exception ex)
@@ -63,13 +75,12 @@ namespace AyleesAngels.Server.Controllers
 
         [HttpPut(Urls.UpdateOfficer)]
         [Authorize]
-        public async Task<IActionResult> UpdateOfficer(int id, [FromBody] Partner updatedPartner)
+        public async Task<IActionResult> UpdateOfficer(int id, [FromBody] Officer updatedOfficer)
         {
             try
             {
-                _context.Entry(updatedPartner).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return Ok(updatedPartner);
+                await _service.UpdateOfficer(updatedOfficer);
+                return Ok(updatedOfficer);
             }
             catch (Exception ex)
             {

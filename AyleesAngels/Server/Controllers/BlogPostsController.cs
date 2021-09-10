@@ -43,6 +43,7 @@ namespace AyleesAngels.Server.Controllers
         }
 
         [HttpPost(Urls.AddBlogPost)]
+        [Authorize]
         public async Task<IActionResult> AddBlogPost([FromBody]BlogPost newBlogPost)
         {
             var savedBlogPost = await _blogPostService.AddBlogPost(newBlogPost);
@@ -50,6 +51,7 @@ namespace AyleesAngels.Server.Controllers
         }
 
         [HttpPut(Urls.UpdateBlogPost)]
+        [Authorize]
         public async Task<IActionResult> UpdateBlogPost(int id, [FromBody]BlogPost updatedBlogPost)
         {
             await _blogPostService.UpdateBlogPost(updatedBlogPost);
@@ -58,6 +60,7 @@ namespace AyleesAngels.Server.Controllers
         }
 
         [HttpDelete(Urls.DeleteBlogPost)]
+        [Authorize]
         public async Task<IActionResult> DeleteBlogPost(int id)
         {
             var response = await _blogPostService.DeleteBlogPost(id);

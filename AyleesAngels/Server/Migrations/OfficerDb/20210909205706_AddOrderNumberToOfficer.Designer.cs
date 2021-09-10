@@ -3,14 +3,16 @@ using AyleesAngels.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AyleesAngels.Server.Migrations.OfficerDb
 {
     [DbContext(typeof(OfficerDbContext))]
-    partial class OfficerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210909205706_AddOrderNumberToOfficer")]
+    partial class AddOrderNumberToOfficer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

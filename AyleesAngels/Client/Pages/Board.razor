@@ -1,9 +1,69 @@
-﻿@page "/officers" 
-            
-<h3>Officers</h3>
+﻿@page "/officers"
+@using AyleesAngels.Shared.Models;
+@using AyleesAngels.Shared.Utils;
+@using System.Security.Claims;
+@using System.Security;
+
+
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
+
+<AAHeader Heading="Officers"></AAHeader>
+
+<div class="container">
+    <AuthorizeView>
+        <Authorized>
+            <NavLink class="nav-link d-inline" href="/addofficer">
+                <button class="btn btn-small btn-success">Add Officer</button>
+            </NavLink>
+        </Authorized>
+    </AuthorizeView>
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto ">
+            <Virtualize Items="@Officers" Context="officer" ItemSize="20" OverscanCount="4" >
+                <OfficerPreview Officer="@officer" @key="@officer.Id" />
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="@($"/editofficer/{officer.Id}")" class="text-warning">Edit</a>
+                        <a @onclick="() => DeleteOfficer(officer.Id)" class="text-danger">Delete</a>
+                    </Authorized>
+                </AuthorizeView>
+            </Virtualize>
+        </div>
+    </div>
+</div>
 
 
 
 @code {
+    protected List<Officer> Officers { get; set; } = new List<Officer>();
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadOfficers();
+    }
+
+    private async Task LoadOfficers()
+    {
+        try
+        {
+            var officerResponse = await ClientFactory.CreateClient("AyleesAngels.ServerAPI.Guest")
+                 .GetFromJsonAsync<ServiceResponse<List<Officer>>>(Urls.Officers);
+            Officers = officerResponse.Data.ToList();
+            Officers.OrderBy(o => o.OrderNumber);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error fetching officers: " + ex.Message);
+        }
+    }
+
+    private async Task DeleteOfficer(int officerId)
+    {
+        var response = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").DeleteAsync(Urls.DeleteOfficer.Replace("{id}", officerId.ToString()));
+        await LoadOfficers();
+    }
+
+    
 }

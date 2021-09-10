@@ -14,7 +14,7 @@ using AyleesAngels.Shared.Utils;
 namespace AyleesAngels.Server.Controllers
 {
     
-    public class PartnersController : Controller
+    public class PartnersController : ControllerBase
     {
 
         private readonly IPartnerService _partnerService;
@@ -72,9 +72,16 @@ namespace AyleesAngels.Server.Controllers
         [HttpPut(Urls.UpdatePartner)] 
         public async Task<IActionResult> PutPartner(int id,[FromBody] Partner updatedPartner)
         {
-            await _partnerService.UpdatePartner(updatedPartner);
+            try
+            {
+                await _partnerService.UpdatePartner(updatedPartner);
 
-            return Ok(updatedPartner);
+                return Ok(updatedPartner);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // DELETE: api/Partners/5

@@ -80,7 +80,17 @@ namespace AyleesAngels.Server.Services
         public async Task<ServiceResponse<List<Partner>>> GetPartners()
         {
             ServiceResponse<List<Partner>> serviceResponse = new ServiceResponse<List<Partner>>();
-            serviceResponse.Data = await _context.Partners.ToListAsync();
+            try
+            {
+                serviceResponse.Data = await _context.Partners.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+            
+            
             return serviceResponse;
         }
 

@@ -1,0 +1,80 @@
+﻿@page "/addofficer"
+
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.Authorization
+@using AyleesAngels.Shared.Models
+@using AyleesAngels.Shared.Utils
+
+
+<AAHeader Heading="Add an Officer"></AAHeader>
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container mb-2">
+        <h3>Add a Partner</h3>
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="editor">
+                    <input @bind=@OfficerName placeholder="Name" class="form-control m-1" />
+                    <input @bind=@OfficerTitle placeholder="Title" class="form-control m-1" />
+                    <input @bind=@OfficerRelation placeholder="Relation" class="form-control m-1" />
+                    <textarea @bind=@OfficerStory placeholder="Write your story" rows="5" class="form-control m-1"></textarea>
+                    <input @bind=@OfficerImageUrl placeholder="Image Url" class="form-control m-1" />
+                    <input @bind=@OfficerOrderNumber placeholder="@nextOfficer" class="form-control m-1" />
+                    <button class="btn btn-primary m-1" @onclick="@SaveOfficer">Add Officer</button>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+@code {
+    protected string OfficerName { get; set; }
+    protected string OfficerTitle { get; set; }
+    protected string OfficerRelation { get; set; }
+    protected string OfficerStory { get; set; }
+    protected string OfficerImageUrl { get; set; }
+    protected int OfficerOrderNumber { get; set; }
+
+
+    public int nextOfficer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetNextOfficerNumber();
+        Console.WriteLine(nextOfficer);
+    }
+
+    private async Task GetNextOfficerNumber()
+    {
+        var officerResponse = await ClientFactory.CreateClient("AyleesAngels.ServerAPI")
+                 .GetFromJsonAsync<ServiceResponse<List<Officer>>>(Urls.Officers);
+        nextOfficer = officerResponse.Data.Count() +1 ;
+        Console.WriteLine(nextOfficer);
+    }
+
+
+    public async Task SaveOfficer()
+    {
+
+        var newOfficer = new Officer()
+        {
+            Name = OfficerName,
+            Title = OfficerTitle,
+            Relation = OfficerRelation,
+            Story = OfficerStory,
+            ImageUrl = OfficerImageUrl,
+            OrderNumber = OfficerOrderNumber
+        };
+
+        var savedOfficer = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<Officer>(Urls.AddOfficer, newOfficer);
+        var response = await savedOfficer.Content.ReadFromJsonAsync<ServiceResponse<Officer>>();
+
+
+        NavigationManager.NavigateTo("officers");
+    }
+
+
+}

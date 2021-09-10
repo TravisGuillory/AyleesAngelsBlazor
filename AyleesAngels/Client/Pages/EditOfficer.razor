@@ -1,0 +1,87 @@
+﻿@page "/editofficer/{officerId}"
+
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
+
+@using AyleesAngels.Shared.Models
+@using AyleesAngels.Shared.Utils
+
+
+<AAHeader Heading="Edit Officer"></AAHeader>
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container mb-2">
+        
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="editor">
+                    <input @bind=@ExistingOfficer.Name placeholder="Name" class="form-control m-1" />
+                    <input @bind=@ExistingOfficer.Title placeholder="Title" class="form-control m-1" />
+                    <input @bind=@ExistingOfficer.Relation placeholder="Relation" class="form-control m-1" />
+                    <textarea @bind=@ExistingOfficer.Story placeholder="Write your story" rows="5" class="form-control m-1"></textarea>
+                    <input @bind=@ExistingOfficer.ImageUrl placeholder="Image Url" class="form-control m-1" />
+                    <input @bind=@ExistingOfficer.OrderNumber placeholder="Order Number" class="form-control m-1" />
+                    
+                    <button class="btn btn-primary m-1" @onclick="@UpdateOfficer">Update Officer</button>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+@code {
+
+
+    [Parameter]
+    public string OfficerId { get; set; }
+
+    public Officer ExistingOfficer { get; set; } = new Officer();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine(OfficerId);
+        if (!string.IsNullOrEmpty(OfficerId))
+            await LoadOfficer();
+    }
+
+    private async Task LoadOfficer()
+    {
+        try
+        {
+            Console.WriteLine("Load Officer hit");
+            var client = ClientFactory.CreateClient("AyleesAngels.ServerAPI");
+
+
+            var response = await client.GetFromJsonAsync<ServiceResponse<Officer>>(Urls.Officer.Replace("{id}", OfficerId));
+            Console.WriteLine(response);
+
+            ExistingOfficer = response.Data;
+
+
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine("****FartHead***" + ex.Message);
+        }
+    }
+
+    private async Task UpdateOfficer()
+    {
+        try
+        {
+            var updatedOfficer = await ClientFactory.CreateClient("AyleesAngels.ServerAPI")
+                       .PutAsJsonAsync<Officer>(Urls.UpdateOfficer.Replace("{id}", OfficerId), ExistingOfficer);
+            var response = updatedOfficer.Content.ReadFromJsonAsync<ServiceResponse<Officer>>();
+
+            NavigationManager.NavigateTo("officers");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

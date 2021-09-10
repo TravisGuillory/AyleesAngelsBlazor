@@ -1,0 +1,15 @@
+﻿@using AyleesAngels.Shared.Models
+
+<div class="container my-2">
+    <h3 class="d-inline">@officer.Name</h3>
+    <h5 class="d-inline ml-2">@officer.Title</h5>
+    <p class="mb-0">@officer.Relation</p>
+    <p class="mb-0">@officer.Story</p>
+</div>
+
+@code {
+
+    [Parameter]
+    public Officer officer { get; set; }
+
+}

@@ -14,5 +14,6 @@ namespace AyleesAngels.Shared.Models
         public string? Relation { get; set; }
         public string Story { get; set; }
         public string ImageUrl { get; set; }
+        public int OrderNumber { get; set; }
     }
 }

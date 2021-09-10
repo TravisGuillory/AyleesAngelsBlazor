@@ -66,6 +66,7 @@ namespace AyleesAngels.Server
             services.AddRazorPages();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<IPartnerService, PartnerService>();
+            services.AddScoped<IOfficerService, OfficerService>();
 
             //services.AddSwaggerGen(c => 
             //{
