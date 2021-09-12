@@ -41,11 +41,7 @@
         </div>
     </div>
 </div>
-<h5>@_authMessage</h5>
-@foreach(var claim in _claims)
-            {
-                <p>@claim</p>
-            }
+
 
 
 @code {
@@ -105,22 +101,7 @@
         
 
 
-        if (user.Identity.IsAuthenticated)
-        {
-            _authMessage = $"{user.Identity.Name} is authenticated.";
-            _claims = user.Claims;
-
-
-            Console.WriteLine("****Claims****" +_claims.Count());
-            foreach(var claim in _claims)
-            {
-                Console.WriteLine(claim);
-            }
-        }
-        else
-        {
-            _authMessage = "User is not authenticated";
-        }
+       
 
         
     }

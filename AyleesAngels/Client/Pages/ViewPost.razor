@@ -2,7 +2,7 @@
 
 
 
-<AAHeader Heading="@BlogPost.Title" Author="@BlogPost.Author" ></AAHeader>
+<AAHeader Heading="@BlogPost.Title" Author="@BlogPost.Author"  PostedDate="@BlogPost.Posted"></AAHeader>
 
 <article>
     <div class="container text-center">
@@ -10,7 +10,10 @@
             <div class="col-lg-8 col-md-10 mx-auto text-center">
                 @if (BlogPost.Title is not null)
                 {
-                    @BlogPost.Post }
+                    <Image ImageUrl="@BlogPost.PostImage"/>    
+                    @BlogPost.Post 
+                
+                }
 
                 else
                 {

@@ -4,14 +4,16 @@ using AyleesAngels.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AyleesAngels.Server.Migrations
 {
     [DbContext(typeof(BlogPostDbContext))]
-    partial class BlogPostDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210912185041_AddImageToPost")]
+    partial class AddImageToPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

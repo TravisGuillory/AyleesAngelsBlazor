@@ -2,13 +2,19 @@
 
 <div class="post-preview">
     <NavLink href="@($"viewpost/{blogPost.Id}")">
+        @if (!string.IsNullOrEmpty(blogPost.PostImage))
+        {
+            <Image ImageUrl="@blogPost.PostImage"/>
+          
+        }
         <h3 class="post-title">
             @blogPost.Title
         </h3>
-        <h5 class="post-subtitle">
-            @blogPost.PostSummary
-        </h5>
     </NavLink>
+        <p class="post-subtitle">
+            @blogPost.Post
+        </p>
+   
     <p class="post-meta">
         Posted by
         <NavLink href="/">@blogPost.Author</NavLink>

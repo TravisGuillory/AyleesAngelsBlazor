@@ -11,8 +11,10 @@
 
 
 <div class="editor">
+    <Image ImageUrl="@ExistingBlogPost.PostImage" />
     <input @bind=@ExistingBlogPost.Title placeholder="Title" class="form-control m-1" />
     <textarea @bind=@ExistingBlogPost.Post placeholder="Write your post" rows="10" class="form-control m-1"></textarea>
+    <input @bind=@ExistingBlogPost.PostImage placeholder="Image Url" class="form-control m-1" />
     <button class="btn btn-primary m-1" @onclick="@UpdatePost">Post</button>
     <br />
 </div>

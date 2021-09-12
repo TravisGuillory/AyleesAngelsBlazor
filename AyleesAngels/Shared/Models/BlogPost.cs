@@ -15,6 +15,7 @@ namespace AyleesAngels.Shared.Models
         public string Author { get; set; }
         public DateTime Posted { get; set; }
         public string Post { get; set; }
+        public string? PostImage { get; set; }
         public string PostSummary
         {
             get

@@ -19,7 +19,7 @@
         </Authorized>
     </AuthorizeView>
     <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto ">
+        <div class="col-lg-8 col-md-10 mx-auto my-2">
             <Virtualize Items="@Officers" Context="officer" ItemSize="20" OverscanCount="4" >
                 <OfficerPreview Officer="@officer" @key="@officer.Id" />
                 <AuthorizeView>

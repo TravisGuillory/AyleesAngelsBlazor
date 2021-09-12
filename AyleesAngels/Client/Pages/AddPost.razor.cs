@@ -28,6 +28,7 @@ namespace AyleesAngels.Client.Pages
 
         protected string Post { get; set; }
         protected string Title { get; set; }
+        protected string PostImage { get; set; }
 
 
          
@@ -44,6 +45,7 @@ namespace AyleesAngels.Client.Pages
                 Title = Title,
                 Author = userName,
                 Post = Post,
+                PostImage = PostImage,
                 Posted = DateTime.Now
             };
 
