@@ -1,8 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: Lora, Cormorant,'Franklin Gothic', 'Helvetica Neue',Roboto, Helvetica, Arial, sans-serif;
-    background-color: antiquewhite;
+    font-family: Lora, Cormorant, 'Franklin Gothic', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f2f2f2;
 }
 
 a, .btn-link {

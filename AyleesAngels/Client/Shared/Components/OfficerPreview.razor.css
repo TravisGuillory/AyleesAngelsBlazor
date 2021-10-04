@@ -1,0 +1,8 @@
+﻿body {
+    color: red;
+}
+
+img {
+    max-height: 250px;
+    object-fit: scale-down;
+}

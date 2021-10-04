@@ -26,9 +26,9 @@ namespace AyleesAngels.Client.Pages
         
 
 
-        protected string Post { get; set; }
-        protected string Title { get; set; }
-        protected string PostImage { get; set; }
+        public string Post { get; set; }
+        public string Title { get; set; }
+        public  string PostImage { get; set; }
 
 
          

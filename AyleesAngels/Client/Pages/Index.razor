@@ -18,6 +18,13 @@
 
 <div class="container">
     <AAHeader Heading="Latest News" SubHeading="Recent Posts" ></AAHeader>
+    <AuthorizeView>
+        <Authorized>
+            <NavLink class="nav-link text-center" href="addpost">
+                <button class="btn btn-small btn-success">Add a Post</button>
+            </NavLink>
+        </Authorized>
+    </AuthorizeView>
     <div class="row text-center">
         <div class="col-lg-8 col-md-10 mx-auto ">
             @foreach (var post in blogPosts)
@@ -32,9 +39,7 @@
                         <a @onclick="() => DeletePost(post.Id)" class="text-danger">Delete</a>
                     </Authorized>
                 </AuthorizeView>
-                <AuthorizeView Roles="developer">
-                    <Authorized>Farthead</Authorized> 
-                </AuthorizeView>
+                
                 
             }
             
@@ -48,7 +53,7 @@
 
 
 
-    protected List<BlogPost> blogPosts { get; set; } = new List<BlogPost>();
+    public List<BlogPost> blogPosts { get; set; } = new List<BlogPost>();
 
     private string _authMessage;
     

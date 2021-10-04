@@ -1,11 +1,31 @@
 ﻿@using AyleesAngels.Shared.Models
 
-<div class="container my-2">
-    <h3 class="d-inline">@officer.Name</h3>
-    <h5 class="d-inline ml-2">@officer.Title</h5>
-    <p class="mb-0">@officer.Relation</p>
-    <p class="mb-0">@officer.Story</p>
+<!--<div class="container ">
+    <div class="row">
+        <div class="col col-2">-->
+            @*<img src="@officer.ImageUrl" alt="@officer.Name Image" class="img-fluid" />*@
+            <!--<Image ImageUrl="@officer.ImageUrl" AltText="@officer.Name" />
+        </div>
+        <div class="col">
+            <h3 class="d-inline">@officer.Name</h3>
+            <h5 class="d-inline ml-2">@officer.Title</h5>
+            <p class="mb-0">@officer.Relation</p>
+            <p class="mb-0">@officer.Story</p>
+        </div>
+    </div>
+    
+</div>-->
+
+<div class="card m-1 p-1" style="width: 18rem;">
+    <img class="card-img-top img-fluid" src="@officer.ImageUrl" alt="@officer.Name"> 
+    <div class="card-body">
+        <h4 class="card-title">@officer.Name</h4>
+        <h5 class="card-text">@officer.Title</h5>
+        <p>@officer.Relation</p>
+    </div>
+
 </div>
+
 
 @code {
 

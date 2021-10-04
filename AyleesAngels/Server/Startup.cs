@@ -2,8 +2,10 @@ using AyleesAngels.Server.Data;
 using AyleesAngels.Server.Models;
 using AyleesAngels.Server.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Linq;
 
 namespace AyleesAngels.Server
@@ -29,32 +32,43 @@ namespace AyleesAngels.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<BlogPostDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             services.AddDbContext<PartnerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<OfficerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+
+
+
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddAuthentication()
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    // add an instance of the patched manager to the options:
+                    options.CookieManager = new ChunkingCookieManager();
+
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SameSite = SameSiteMode.Lax;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                    
+                })
+
                 .AddIdentityServerJwt();
 
             services.AddAuthorization(options => 
@@ -68,13 +82,7 @@ namespace AyleesAngels.Server
             services.AddScoped<IPartnerService, PartnerService>();
             services.AddScoped<IOfficerService, OfficerService>();
 
-            //services.AddSwaggerGen(c => 
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aylees's Angels API", Version = "v1" });
-
-
-
-            //});
+            
             services.AddSwaggerGen();
             
         }
@@ -105,6 +113,8 @@ namespace AyleesAngels.Server
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
