@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AyleesAngels.Client.Pages
 {
-    [Authorize]
+    [Authorize (Roles = "Admin")]
     public partial class AddPost
     {
         [Inject]

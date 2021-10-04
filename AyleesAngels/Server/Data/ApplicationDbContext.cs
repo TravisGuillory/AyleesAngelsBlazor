@@ -23,36 +23,8 @@ namespace AyleesAngels.Server.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole 
-            {   Name = "User", 
-                NormalizedName = "USER", 
-                Id = Guid.NewGuid().ToString(), 
-                ConcurrencyStamp = Guid.NewGuid().ToString() 
-            });
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            { 
-                Name="Admin",
-                NormalizedName = "ADMIN",
-                Id = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString()
-            });
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Name = "Developer",
-                NormalizedName = "DEVELOPER",
-                Id = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString()
-            });
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Name = "Owner",
-                NormalizedName = "OWNER",
-                Id = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString()
-            });
-
-
-
+            builder.ApplyConfiguration(new RoleConfiguration());
+            
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AyleesAngels.Client.Pages
 { 
-    [Authorize]
+    [Authorize (Roles ="Admin")]
     public partial class EditPartner :ComponentBase
     {
         [Inject]

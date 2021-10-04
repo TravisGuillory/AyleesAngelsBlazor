@@ -18,8 +18,8 @@
 
 <div class="container">
     <AAHeader Heading="Latest News" SubHeading="Recent Posts" ></AAHeader>
-    <AuthorizeView>
-        <Authorized>
+    <AuthorizeView Roles="Admin">
+        <Authorized >
             <NavLink class="nav-link text-center" href="addpost">
                 <button class="btn btn-small btn-success">Add a Post</button>
             </NavLink>
@@ -31,7 +31,7 @@
             {
                 <BlogPostPreview BlogPost=@post></BlogPostPreview>
                 
-                <AuthorizeView >
+                <AuthorizeView Roles="Admin">
                     <Authorized>
                         <NavLink class="nav-link d-inline" href="@($"/editpost/{post.Id}")">
                             <a class="text-warning">Edit</a>
@@ -54,9 +54,7 @@
 
 
     public List<BlogPost> blogPosts { get; set; } = new List<BlogPost>();
-
-    private string _authMessage;
-    
+            
     private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
     
 
@@ -103,10 +101,6 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         
-        
-
-
-       
 
         
     }

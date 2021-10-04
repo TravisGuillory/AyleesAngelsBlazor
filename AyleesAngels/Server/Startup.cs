@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace AyleesAngels.Server
@@ -55,7 +56,12 @@ namespace AyleesAngels.Server
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                    {
+                        options.IdentityResources["openid"].UserClaims.Add("role");
+                        options.ApiResources.Single().UserClaims.Add("role");
+                    });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

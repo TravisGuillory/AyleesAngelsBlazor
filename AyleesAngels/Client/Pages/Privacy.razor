@@ -1,0 +1,23 @@
+﻿@page "/privacy"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<h3>Privacy</h3>
+
+<AuthorizeView Roles="Admin">
+    <h2>
+        Hello @context.User.Identity.Name,
+        here is the list of your claims:
+    </h2>
+    <ul>
+        @foreach(var claim in context.User.Claims)
+                {
+                    <li><b>@claim.Type</b>: @claim.Value</li>
+                }
+    </ul>
+</AuthorizeView>
+
+
+@code {
+
+}

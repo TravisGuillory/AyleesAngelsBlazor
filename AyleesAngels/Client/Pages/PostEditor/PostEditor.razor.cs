@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AyleesAngels.Client.Pages.PostEditor
 {
-    [Authorize]
+    [Authorize (Roles = "Admin")]
     public partial class PostEditor
     {
         [Inject]

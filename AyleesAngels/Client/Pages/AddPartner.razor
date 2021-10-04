@@ -1,10 +1,11 @@
 ﻿@page "/addpartner"
 @using AyleesAngels.Shared.Models;
 @using AyleesAngels.Shared.Utils;
+@using Microsoft.AspNetCore.Authorization
 
 @inject NavigationManager NavigationManager
 @inject IHttpClientFactory ClientFactory
-
+@attribute [Authorize (Roles ="Admin")]
 
 
 
@@ -17,8 +18,8 @@
         <div class="row">
             <div class="col col-md-12">
                 <div class="editor">
-                    <input @bind=@PartnerName placeholder="Title" class="form-control m-1"  />
-                    <input @bind=@PartnerImageUrl placeholder="Image Link"  class="form-control m-1" />
+                    <input @bind=@PartnerName placeholder="Title" class="form-control m-1" />
+                    <input @bind=@PartnerImageUrl placeholder="Image Link" class="form-control m-1" />
                     <input @bind=@PartnerLinkUrl placeholder="Company Link" class="form-control m-1" />
                     <button class="btn btn-primary m-1" @onclick="@SavePartner">Add Partner</button>
                     <br />
@@ -28,31 +29,28 @@
     </div>
 </header>
 
-@code {
+@code { public string PartnerName { get; set; }
+            public string PartnerImageUrl { get; set; }
+            public string PartnerLinkUrl { get; set; }
 
-    public string PartnerName { get; set; }
-    public string PartnerImageUrl { get; set; }
-    public string PartnerLinkUrl { get; set; }
-
-    public async Task SavePartner()
-    {
+            public async Task SavePartner()
+            {
 
 
 
 
-        var newPartner = new Partner()
-        {
-            Name= PartnerName,
-            ImageUrl = PartnerImageUrl,
-            LinkUrl = PartnerLinkUrl
-        };
+                var newPartner = new Partner()
+                {
+                    Name = PartnerName,
+                    ImageUrl = PartnerImageUrl,
+                    LinkUrl = PartnerLinkUrl
+                };
 
-        var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<Partner>(Urls.AddPartner, newPartner);
-        var response = await savedPost.Content.ReadFromJsonAsync<ServiceResponse<Partner>>();
+                var savedPost = await ClientFactory.CreateClient("AyleesAngels.ServerAPI").PostAsJsonAsync<Partner>(Urls.AddPartner, newPartner);
+                var response = await savedPost.Content.ReadFromJsonAsync<ServiceResponse<Partner>>();
 
-        NavigationManager.NavigateTo("partners");
+                NavigationManager.NavigateTo("partners");
 
 
 
-    }
-}
+            } }

@@ -6,6 +6,8 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using AyleesAngels.Shared.Models
 @using AyleesAngels.Shared.Utils
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 
 
 <AAHeader Heading="Add an Officer"></AAHeader>
@@ -51,7 +53,7 @@
     {
         var officerResponse = await ClientFactory.CreateClient("AyleesAngels.ServerAPI")
                  .GetFromJsonAsync<ServiceResponse<List<Officer>>>(Urls.Officers);
-        nextOfficer = officerResponse.Data.Count() +1 ;
+        nextOfficer = officerResponse.Data.Count() + 1;
         Console.WriteLine(nextOfficer);
     }
 

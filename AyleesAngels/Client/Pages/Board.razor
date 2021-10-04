@@ -11,7 +11,7 @@
 <AAHeader Heading="Officers"></AAHeader>
 
 <div class="container">
-    <AuthorizeView>
+    <AuthorizeView Roles="Admin">
         <Authorized>
             <NavLink class="nav-link d-inline" href="/addofficer">
                 <button class="btn btn-small btn-success">Add Officer</button>
@@ -22,7 +22,7 @@
         @*<div class="col-lg-8 col-md-10 mx-auto my-2">*@
             <Virtualize Items="@Officers" Context="officer" ItemSize="20" OverscanCount="4" >
                 <OfficerPreview Officer="@officer" @key="@officer.Id" />
-                <AuthorizeView>
+                <AuthorizeView Roles="Admin">
                     <Authorized>
                         <br />
                         <a href="@($"/editofficer/{officer.Id}")" class="text-warning">Edit </a>
@@ -33,9 +33,7 @@
         @*</div>*@
     </div>
 </div>
-<AuthorizeView Roles="Developer">
-    <h2>Dev Test</h2>
-</AuthorizeView>
+
 
 
 @code {

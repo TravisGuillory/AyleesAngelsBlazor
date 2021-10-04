@@ -6,17 +6,17 @@
 
 
 
-<AAHeader Heading="@ExistingPartner.Name" ></AAHeader>
+<AAHeader Heading="@ExistingPartner.Name"></AAHeader>
 <header class="masthead">
     <div class="overlay"></div>
     <div class="container mb-2">
-        
+
         <div class="row">
             <div class="col col-md-12">
                 <div class="editor">
                     <input @bind=@ExistingPartner.Name placeholder="@ExistingPartner.Name" class="form-control m-1" />
-                    <input @bind=@ExistingPartner.ImageUrl placeholder="@ExistingPartner.ImageUrl" class="form-control m-1"/>
-                    <input @bind=@ExistingPartner.LinkUrl placeholder="@ExistingPartner.LinkUrl" class="form-control m-1 "/>
+                    <input @bind=@ExistingPartner.ImageUrl placeholder="@ExistingPartner.ImageUrl" class="form-control m-1" />
+                    <input @bind=@ExistingPartner.LinkUrl placeholder="@ExistingPartner.LinkUrl" class="form-control m-1 " />
                     <button class="btn btn-primary m-1" @onclick="@UpdatePartner">Update Partner</button>
                     <br />
                 </div>

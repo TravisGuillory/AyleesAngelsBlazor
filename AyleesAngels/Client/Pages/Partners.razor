@@ -10,7 +10,7 @@
 <div class="container">
     <AAHeader Heading="Thank You to Our Amazing Partners" />
     <div class="text-center">
-        <AuthorizeView>
+        <AuthorizeView Roles="Admin">
             <Authorized>
                 <NavLink class="nav-link d-inline" href="/addpartner">
                     <button class="btn btn-small btn-success">Add Partner</button>
@@ -34,7 +34,7 @@
                 </a>
                     <h4 class="d-inline" href="@partner.LinkUrl">@partner.Name</h4>
                 
-                <AuthorizeView>
+                <AuthorizeView Roles="Admin">
                     <Authorized>
                         <NavLink class="nav-link d-inline" href="@($"/editpartner/{partner.Id}")">
                             

@@ -2,16 +2,18 @@
 
 @inject IHttpClientFactory ClientFactory
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
 
 @using AyleesAngels.Shared.Models
 @using AyleesAngels.Shared.Utils
+@attribute [Authorize (Roles ="Admin")]
 
 
 <AAHeader Heading="Edit Officer"></AAHeader>
 <header class="masthead">
     <div class="overlay"></div>
     <div class="container mb-2">
-        
+
         <div class="row">
             <div class="col col-md-12">
                 <div class="editor">
@@ -21,7 +23,7 @@
                     <textarea @bind=@ExistingOfficer.Story placeholder="Write your story" rows="5" class="form-control m-1"></textarea>
                     <input @bind=@ExistingOfficer.ImageUrl placeholder="Image Url" class="form-control m-1" />
                     <input @bind=@ExistingOfficer.OrderNumber placeholder="Order Number" class="form-control m-1" />
-                    
+
                     <button class="btn btn-primary m-1" @onclick="@UpdateOfficer">Update Officer</button>
                     <br />
                 </div>
