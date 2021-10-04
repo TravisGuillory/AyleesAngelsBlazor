@@ -5,6 +5,8 @@
 
 ## appsettings
 appsettings.*
+*.pfx
+
 
 # User-specific files
 *.rsuser
